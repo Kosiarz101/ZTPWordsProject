@@ -1,0 +1,84 @@
+﻿<Window x:Class="ZTPWordsProject.QuizWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZTPWordsProject"
+        mc:Ignorable="d"
+        Title="QuizWindow" Height="720" Width="1280">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource CenterTB}" Grid.Row="1" Grid.Column="2" Text="QuizWords" FontSize="35"/>
+        <TextBlock x:Name="questionNumberTb" Style="{StaticResource CenterTB}" Grid.Row="3" Grid.Column="2" Text="1/20" FontSize="35"/>
+        <TextBlock Style="{StaticResource CenterTB}" Grid.Row="5" Grid.Column="2" Text="Car" FontSize="35"/>
+
+        <Button x:Name="FirstAnswer" Grid.Column="2" Grid.Row="7" >
+            <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
+        </Button>
+        <Button x:Name="SecondAnswer" Grid.Column="2" Grid.Row="9" >
+            <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
+        </Button>
+        <Button x:Name="ThirdAnswer" Grid.Column="2" Grid.Row="11" >
+            <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
+        </Button>
+        <Button x:Name="FourthAnswer" Grid.Column="2" Grid.Row="13" >
+            <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
+        </Button>
+        <Grid Grid.Row="15" Grid.Column="1" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="PreviousQuestion" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Click="PreviousQuestion_Click" >
+                <TextBlock Text="&lt;&lt;" FontSize="25"></TextBlock>
+            </Button>
+            <TextBlock Style="{StaticResource CenterTB}" Grid.Row="1" Grid.Column="2" Text="Poziom Trudności:" FontSize="16" />
+            <TextBlock x:Name="difficultyTb" Style="{StaticResource CenterTB}" Grid.Row="2" Grid.Column="2" Text="Łatwy" FontSize="16" />
+            <TextBlock Style="{StaticResource CenterTB}" Grid.Row="1" Grid.Column="4" Text="Tryb:" FontSize="16" />
+            <TextBlock x:Name="modeTb" Style="{StaticResource CenterTB}" Grid.Row="2" Grid.Column="4" Text="Nauki" FontSize="16" />
+            <TextBlock Style="{StaticResource CenterTB}" Grid.Row="1" Grid.Column="6" Text="Tłumaczenie:" FontSize="16" />
+            <TextBlock x:Name="translationSiteTb" Style="{StaticResource CenterTB}" Grid.Row="2" Grid.Column="6" Text="Obcy-Polski" FontSize="16" />
+            <Button x:Name="NextQuestion" Grid.Column="8" Grid.Row="1" Grid.RowSpan="2" Click="NextQuestion_Click" >
+                <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
