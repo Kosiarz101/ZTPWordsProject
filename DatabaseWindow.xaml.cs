@@ -118,6 +118,10 @@ namespace ZTPWordsProject
 
         private void AddWord()
         {
+            if(languageName.Text == "Wszystkie")
+            {
+                return;
+            }
             Word word = new Word()
             {
                 Language = languageName.Text,
@@ -217,6 +221,25 @@ namespace ZTPWordsProject
                 button.Click += btnTranslation_Click;
                 button.Style = this.FindResource("ButtonBackgroundInvisibleRed") as Style;
                 TranslationSP.Children.Add(button);
+            }
+        }
+
+        private void AddLanguageButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddLanguageWindow addLanguageWindow = new AddLanguageWindow();
+            if((bool)addLanguageWindow.ShowDialog())
+            {
+                SetButtonsLanguage();
+            }
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Escape)
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
             }
         }
     }

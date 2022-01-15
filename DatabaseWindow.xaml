@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZTPWordsProject"
         mc:Ignorable="d"
-        Title="DatabaseWindow" Height="720" Width="1280">
+        Title="DatabaseWindow" Height="720" Width="1280" KeyUp="Window_KeyUp">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="12*"/>
@@ -27,10 +27,13 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.RowSpan="100" >
+        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" >
             <StackPanel x:Name="LanguageSP">
             </StackPanel>
         </ScrollViewer>
+        <Button x:Name="AddLanguageButton" Grid.Column="0" Grid.Row="9" Click="AddLanguageButton_Click">
+            <TextBlock Text="Dodaj Język" FontSize="20"></TextBlock>
+        </Button>
         <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="languageName" Text=" Wybierz Język" FontSize="20"></TextBlock>
         <Grid Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>

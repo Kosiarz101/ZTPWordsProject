@@ -1,0 +1,35 @@
+﻿<Window x:Class="ZTPWordsProject.AddLanguageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZTPWordsProject"
+        mc:Ignorable="d"
+        Title="AddLanguageWindow" Height="350" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Style="{StaticResource CenterTB}" Grid.Row="1" Grid.Column="1" Text="Dodaj Język" HorizontalAlignment="Left" FontSize="25"/>
+        <TextBox x:Name="languageTb" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="16" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <TextBlock Style="{StaticResource CenterTB}" Grid.Row="3" Grid.Column="1" Text="Dodaj Słowo" HorizontalAlignment="Left" FontSize="25"/>
+        <TextBox x:Name="wordTb" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="16" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <TextBlock Style="{StaticResource CenterTB}" x:Name="errorTb" Grid.Row="6" Grid.Column="1" Text="" HorizontalAlignment="Left" FontSize="16"/>
+        <Button x:Name="AddLanguageButton" Grid.Column="2" Grid.Row="6" Click="AddLanguageButton_Click">
+            <TextBlock Text="Akceptuj" FontSize="16"></TextBlock>
+        </Button>
+    </Grid>
+</Window>
