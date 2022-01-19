@@ -6,8 +6,8 @@ namespace ZTPWordsProject.AppModels
 {
     public interface IAnswerBuilder
     {
-        public void BuildAnswer();
+        public void BuildAnswer(string language);
         public void BuildRandomAnswers();
-        public WordWithTranslations GetResult();
+        public Answers GetResult();
     }
 }

@@ -6,10 +6,11 @@ namespace ZTPWordsProject.AppModels
 {
     public class AnswerDirector
     {
-        public void ConstructAnswer(IAnswerBuilder builder)
+        public void ConstructAnswer(IAnswerBuilder builder, string language)
         {
-            builder.BuildAnswer();
+            builder.BuildAnswer(language);
             builder.BuildRandomAnswers();
+            builder.GetResult();
         }
     }
 }

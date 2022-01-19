@@ -6,10 +6,9 @@ namespace ZTPWordsProject.AppModels
 {
     public class HardLevel : IDifficultyLevel
     {
-        public string[] Answers()
+        public int Answers()
         {
-            string[] answers = { "Odpowiedź 1", "Odpowiedź 2" };
-            return answers;
+            return 4;
         }
     }
 }

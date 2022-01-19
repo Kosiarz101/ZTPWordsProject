@@ -24,7 +24,8 @@ namespace ZTPWordsProject
         IMode mode;
         AnswerDirector answerDirector = new AnswerDirector();
         IAnswerBuilder builder;
-        WordWithTranslations answers;
+        List<Answers> answers = new List<Answers>();
+        IDifficultyLevel difficultyLevel;
 
         List<string> difficulties;
         List<string> modes;
@@ -160,18 +161,18 @@ namespace ZTPWordsProject
             if (translationSites[translationSiteCounter] == "Polsk-Obcy")
             {
                 builder = new AnswerBuilderPolishForeign();
-                answerDirector.ConstructAnswer(builder);
-                answers = builder.GetResult();
+                answerDirector.ConstructAnswer(builder, languageTb.Text);
+                answers.Add(builder.GetResult());
             }
                 
             else
             {
                 builder = new AnswerBuilderForeignPolish();
-                answerDirector.ConstructAnswer(builder);
-                answers = builder.GetResult();
+                answerDirector.ConstructAnswer(builder, languageTb.Text);
+                answers.Add(builder.GetResult());
             }
 
-            QuizWindow quizWindow = new QuizWindow(song, mode);
+            QuizWindow quizWindow = new QuizWindow(song, mode, difficultyLevel, answers);
             quizWindow.Show();
             this.Close();
         }

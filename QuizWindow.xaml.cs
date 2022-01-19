@@ -26,9 +26,18 @@ namespace ZTPWordsProject
         public IMode Mode { get; set; }
         private IDifficultyLevel DifficultyLevel { get; set; }
 
+        public string Question;
+        private List<Answers> ListofQuestions = new List<Answers>();
+
+        private List<string> QuestionAnswers { get; set; }
+
         private string[] answers;
 
         private int points;
+
+        public int number;
+
+        public string question { get; set; }
         private string UserAnswer { get; set; }
         private List<IMemento> mementoList = new List<IMemento>();
 
@@ -47,7 +56,7 @@ namespace ZTPWordsProject
             Mode = mode;
             Mode.SetTextBlock(modeTb);
         }
-        public QuizWindow(ISong song, IMode mode, IDifficultyLevel difficultyLevel)
+        public QuizWindow(ISong song, IMode mode, IDifficultyLevel difficultyLevel, List<Answers> answers)
         {
             InitializeComponent();
             wordDatabase = WordDatabase.GetInstance();
@@ -57,6 +66,13 @@ namespace ZTPWordsProject
             Mode = mode;
             Mode.SetTextBlock(modeTb);
             DifficultyLevel = difficultyLevel;
+            for (int i = 0; i < 20; i++)
+            {
+                ListofQuestions.Add(answers[i]);
+            }
+            number = SetDifficultyLevel();
+            ShowAnswers();
+            //this.DataContext = this;
         }
 
         private void NextQuestion_Click(object sender, RoutedEventArgs e)
@@ -80,6 +96,7 @@ namespace ZTPWordsProject
                     if (mementoListCount() == Index)
                         AddState(SaveState());
                     Index++;
+                    ShowAnswers();
                     //tbQuestion.Text = words[Index];
                     //tbAnswer.Text = "";
                 }
@@ -96,6 +113,7 @@ namespace ZTPWordsProject
         private void SetState(Memento memento)
         {
             Index = memento.Index;
+            ShowAnswers();
             //tbAnswer.Text = memento.Answer;
             //tbQuestion.Text = words[Index];
         }
@@ -134,11 +152,33 @@ namespace ZTPWordsProject
         public int mementoListCount()
         {
             return mementoList.Count;
-        }    
-        
+        }
+
         public void ShowAnswers()
         {
-            answers = DifficultyLevel.Answers();
+            Answers DaQuestion = ListofQuestions.ElementAt(Index);
+            question = DaQuestion.GetQuestion();
+            QuestionAnswers = DaQuestion.GetAnswers();
+            if (number == 2)
+            {
+                QuestionAnswers.RemoveAt(3);
+                QuestionAnswers.RemoveAt(2);
+                QuestionAnswers.Add("x");
+                QuestionAnswers.Add("x");
+
+            }
+            else if (number == 3)
+            {
+                QuestionAnswers.RemoveAt(3);
+                QuestionAnswers.Add("x");
+            }
+
+        }
+
+        public int SetDifficultyLevel()
+        {
+            number = DifficultyLevel.Answers();
+            return number;
         }
     }
 }

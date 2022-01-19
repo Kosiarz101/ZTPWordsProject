@@ -6,6 +6,6 @@ namespace ZTPWordsProject.AppModels
 {
     public interface IDifficultyLevel
     {
-        public string[] Answers();
+        public int Answers();
     }
 }

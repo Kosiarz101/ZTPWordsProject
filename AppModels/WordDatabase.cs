@@ -146,5 +146,32 @@ namespace ZTPWordsProject.AppModels
             context.Words.Remove(word);
             context.SaveChanges();
         }
+
+        public List<WordWithTranslations> GetAllWordsFromLanguage(string language)
+        {
+            List<WordWithTranslations> wordWithTranslationsList = new List<WordWithTranslations>();
+            List<Word> words;
+
+            if (language == "Wszystkie")
+                words = context.Words.ToList();
+            else
+                words = context.Words.Where(x => x.Language == language).ToList();
+            if (words == null)
+            {
+                return null;
+            }
+            foreach (Word word in words)
+            {
+                List<string> translations = context.WordTranslations
+                .Where(x => x.WordId == word.Id)
+                .Include(x => x.Translation)
+                .Select(x => x.Translation.Content)
+                .ToList();
+                WordWithTranslations wordWithTranslations = new WordWithTranslations(word.Language, word.Content, translations);
+                wordWithTranslationsList.Add(wordWithTranslations);
+            }
+
+            return wordWithTranslationsList;
+        }
     }
 }
