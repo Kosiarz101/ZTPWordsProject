@@ -24,6 +24,10 @@ namespace ZTPWordsProject
         public int Index { get; set; } = 0;
         private ISong Song { get; set; }
         public IMode Mode { get; set; }
+        private IDifficultyLevel DifficultyLevel { get; set; }
+
+        private string[] answers;
+
         private int points;
         private string UserAnswer { get; set; }
         private List<IMemento> mementoList = new List<IMemento>();
@@ -42,7 +46,18 @@ namespace ZTPWordsProject
                 Song.PlaySong();
             Mode = mode;
             Mode.SetTextBlock(modeTb);
-        }      
+        }
+        public QuizWindow(ISong song, IMode mode, IDifficultyLevel difficultyLevel)
+        {
+            InitializeComponent();
+            wordDatabase = WordDatabase.GetInstance();
+            Song = song;
+            if (song != null)
+                Song.PlaySong();
+            Mode = mode;
+            Mode.SetTextBlock(modeTb);
+            DifficultyLevel = difficultyLevel;
+        }
 
         private void NextQuestion_Click(object sender, RoutedEventArgs e)
         {
@@ -119,6 +134,11 @@ namespace ZTPWordsProject
         public int mementoListCount()
         {
             return mementoList.Count;
-        }       
+        }    
+        
+        public void ShowAnswers()
+        {
+            answers = DifficultyLevel.Answers();
+        }
     }
 }

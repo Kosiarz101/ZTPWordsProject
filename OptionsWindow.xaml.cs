@@ -22,6 +22,9 @@ namespace ZTPWordsProject
         ISongCreator songCreator;
         ISong song;
         IMode mode;
+        AnswerDirector answerDirector = new AnswerDirector();
+        IAnswerBuilder builder;
+        WordWithTranslations answers;
 
         List<string> difficulties;
         List<string> modes;
@@ -119,6 +122,17 @@ namespace ZTPWordsProject
             languageTb.Text = (sender as ComboBox).SelectedItem as string;
         }
 
+        private void slDifficultyOption_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            difficultyCounter = (int)slDifficultyOption.Value;
+            difficultyTb.Text = difficulties[difficultyCounter];
+        }
+        private void slTranslationOption_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            translationSiteCounter = (int)slTranslationOption.Value;
+            translationTb.Text = translationSites[translationSiteCounter];
+        }
+
         private void Next_Click(object sender, RoutedEventArgs e)
         {
             //Rozpączenie grania muzyki
@@ -143,9 +157,25 @@ namespace ZTPWordsProject
             else
                 song = null;
 
+            if (translationSites[translationSiteCounter] == "Polsk-Obcy")
+            {
+                builder = new AnswerBuilderPolishForeign();
+                answerDirector.ConstructAnswer(builder);
+                answers = builder.GetResult();
+            }
+                
+            else
+            {
+                builder = new AnswerBuilderForeignPolish();
+                answerDirector.ConstructAnswer(builder);
+                answers = builder.GetResult();
+            }
+
             QuizWindow quizWindow = new QuizWindow(song, mode);
             quizWindow.Show();
             this.Close();
         }
+
+        
     }
 }

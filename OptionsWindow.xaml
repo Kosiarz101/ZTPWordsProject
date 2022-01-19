@@ -41,11 +41,11 @@
         <TextBlock x:Name="modeTb" Style="{StaticResource CenterTB}" Grid.Row="3" HorizontalAlignment="Left" Grid.Column="5" Text="Tryb" FontSize="20"/>
         <TextBlock Style="{StaticResource CenterTB}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Text="Poziom Trudności" FontSize="20"/>
         <Slider x:Name="slDifficultyOption" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" SmallChange="1" 
-                TickPlacement="TopLeft" Cursor="Hand" Background="#00991F1F"/>
+                TickPlacement="TopLeft" Cursor="Hand" Background="#00991F1F" ValueChanged="slDifficultyOption_ValueChanged"/>
         <TextBlock x:Name="difficultyTb" Style="{StaticResource CenterTB}" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="5" Text="Łatwy" FontSize="20"/>
         <TextBlock Style="{StaticResource CenterTB}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Text="Tłumaczenie" FontSize="20"/>
         <Slider x:Name="slTranslationOption" Grid.Row="7" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" SmallChange="1" 
-                TickPlacement="TopLeft" Cursor="Hand" Background="#00991F1F"/>
+                TickPlacement="TopLeft" Cursor="Hand" Background="#00991F1F" ValueChanged="slTranslationOption_ValueChanged"/>
         <TextBlock x:Name="translationTb" Style="{StaticResource CenterTB}" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="5" Text="Polski-Obcy" FontSize="20"/>
         <TextBlock Style="{StaticResource CenterTB}" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left" Text="Język" FontSize="20"/>
         <ComboBox Name="languageComboBox" Grid.Column="3" Grid.Row="9" FontSize="16" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Text="Polish" SelectionChanged="languageComboBox_SelectionChanged">
