@@ -199,9 +199,9 @@ namespace ZTPWordsProject
                 .Where(x => x.Content == chosenContent)
                 .FirstOrDefault();
 
-            wordWithTranslationsList = wordDatabase.GetWordWithTranslationsBySearch(word.Content, word.Language);
+            //wordWithTranslationsList = wordDatabase.GetWordWithTranslationsBySearch(word.Content, word.Language);
 
-            word = wordWithTranslationsList.Where(x => x.Content == chosenContent).FirstOrDefault();
+            word = wordDatabase.GetWordWithTranslationsBySearch(word.Content, word.Language).Where(x => x.Content == chosenContent).FirstOrDefault();
             if (word.TranslationList.Count == 0)
             {
                 textBlock = new TextBlock();

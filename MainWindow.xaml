@@ -29,7 +29,7 @@
         <Button x:Name="Play" Grid.Row="3" Grid.Column="1" Click="Play_Click">
             <TextBlock Style="{StaticResource CenterTB}" Text="Play" FontSize="25"/>
         </Button>
-        <Button x:Name="Ranking" Grid.Row="5" Grid.Column="1">
+        <Button x:Name="Ranking" Grid.Row="5" Grid.Column="1" Click="Ranking_Click">
             <TextBlock Style="{StaticResource CenterTB}" Text="Ranking" FontSize="25"/>
         </Button>
         <Button x:Name="Database" Grid.Row="7" Grid.Column="1" Click="Database_Click">

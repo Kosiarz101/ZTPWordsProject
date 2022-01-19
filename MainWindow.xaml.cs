@@ -64,5 +64,12 @@ namespace ZTPWordsProject
             databaseWindow.Show();
             this.Close();
         }
+
+        private void Ranking_Click(object sender, RoutedEventArgs e)
+        {
+            RankingWindow rankingWindow = new RankingWindow();
+            rankingWindow.Show();
+            this.Close();
+        }
     }
 }
