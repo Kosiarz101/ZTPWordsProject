@@ -47,7 +47,7 @@ namespace ZTPWordsProject
             };
             translationSites = new List<string>()
             {
-                "Polsk-Obcy", "Obcy-Polski"
+                "Polski-Obcy", "Obcy-Polski"
             };
             songs = new List<string>()
             {
