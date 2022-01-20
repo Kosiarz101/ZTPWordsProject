@@ -43,6 +43,10 @@ namespace ZTPWordsProject
         //Zarządca we wzorcu Memento
         private List<IMemento> mementoList = new List<IMemento>();
 
+        private Answers DaQuestion { get; set; }
+
+        private AnswerIterator iterator;
+
         public QuizWindow()
         {
             InitializeComponent();
@@ -74,17 +78,20 @@ namespace ZTPWordsProject
             }
             number = SetDifficultyLevel();
             DataContext = this;
-            ShowAnswers();
+            iterator = new AnswerIterator(ListofQuestions);
+            DaQuestion = iterator.GetNext();
+            ShowAnswers(DaQuestion);
             language = llanguage;
             setInformationAboutGame();
         }
 
         private void NextQuestion_Click(object sender, RoutedEventArgs e)
         {
-            if(Index==19)
+            if(!iterator.HasNext())
             {
-                Song.StopPlaying();
-                EndScreen endScreen = new EndScreen(points, "Angielski", modeTb.Text, difficultyTb.Text);
+                if(Song != null)
+                    Song.StopPlaying();
+                EndScreen endScreen = new EndScreen(points, language, difficultyTb.Text, modeTb.Text);
                 endScreen.Show();
                 this.Close();
                 return;
@@ -95,7 +102,8 @@ namespace ZTPWordsProject
                 if (mementoListCount() > Index + 1)
                 {
                     SetState((Memento)GetState(Index + 1));
-                    ShowAnswers();
+                    DaQuestion = iterator.GetNext();
+                    ShowAnswers(DaQuestion);
                 }
                 //Jeśli nie, utwórz nową pamiątkę
                 else
@@ -104,7 +112,8 @@ namespace ZTPWordsProject
                         AddState(SaveState());
                     Index++;
                     UserAnswer = null;
-                    ShowAnswers();
+                    DaQuestion = iterator.GetNext();
+                    ShowAnswers(DaQuestion);
                     //tbQuestion.Text = words[Index];
                     //tbAnswer.Text = "";
                 }
@@ -115,14 +124,14 @@ namespace ZTPWordsProject
         {
             if(Index != 0)
                 SetState((Memento)GetState(Index - 1));           
-            ShowAnswers();
+            ShowAnswers(DaQuestion);
         }
         //Wczytaj stan z pamiątki
         private void SetState(Memento memento)
         {
             Index = memento.Index;
             UserAnswer = memento.UserAnswer;
-            ShowAnswers();
+            ShowAnswers(DaQuestion);
             //tbAnswer.Text = memento.Answer;
             //tbQuestion.Text = words[Index];
         }
@@ -164,14 +173,14 @@ namespace ZTPWordsProject
             return mementoList.Count;
         }
 
-        public void ShowAnswers()
+        public void ShowAnswers(Answers DaQuestion)
         {
             if (Index > 19)
             {
                 return;
             }        
             questionNumberTb.Text = (Index + 1).ToString() + "/20";
-            Answers DaQuestion = ListofQuestions.ElementAt(Index);
+            DaQuestion = ListofQuestions.ElementAt(Index);
             questionContentTb.Text = DaQuestion.GetQuestion();
             QuestionAnswers = DaQuestion.GetAnswers();
             if (number == 2)
@@ -217,21 +226,32 @@ namespace ZTPWordsProject
         }
         private void setTextBlockAnswers()
         {
+            Random rnd = new Random();
+
+            List<int> listNumbers = new List<int>();
+            int number;
+            for (int i = 0; i < 4; i++)
+            {
+                do
+                {
+                    number = rnd.Next(4);
+                } while (listNumbers.Contains(number));
+                listNumbers.Add(number);
+            }
+
+            TextBlock tb = (TextBlock)FirstAnswer.Content;
+            tb.Text = QuestionAnswers[listNumbers[0]];
+            tb = (TextBlock)SecondAnswer.Content;
+            tb.Text = QuestionAnswers[listNumbers[1]];
+            tb = (TextBlock)ThirdAnswer.Content;
+            tb.Text = QuestionAnswers[listNumbers[2]];
+            tb = (TextBlock)FourthAnswer.Content;
+            tb.Text = QuestionAnswers[listNumbers[3]];
+
             buttonColor(FirstAnswer);
             buttonColor(SecondAnswer);
             buttonColor(ThirdAnswer);
-            buttonColor(FourthAnswer);
-
-            Random rnd = new Random();
-
-            TextBlock tb = (TextBlock)FirstAnswer.Content;
-            tb.Text = QuestionAnswers[0];
-            tb = (TextBlock)SecondAnswer.Content;
-            tb.Text = QuestionAnswers[1];
-            tb = (TextBlock)ThirdAnswer.Content;
-            tb.Text = QuestionAnswers[2];
-            tb = (TextBlock)FourthAnswer.Content;
-            tb.Text = QuestionAnswers[3];
+            buttonColor(FourthAnswer);          
         }
 
         public string setDifficultyLevel()
@@ -239,10 +259,8 @@ namespace ZTPWordsProject
             return DifficultyLevel.getPoziomTrudności();
         }
 
-
         private void setInformationAboutGame()
         {
-
             TextBlock tb = difficultyTb;
             tb.Text = setDifficultyLevel();
             TextBlock tr = translationSiteTb;

@@ -19,6 +19,7 @@ namespace ZTPWordsProject
     /// </summary>
     public partial class EndScreen : Window
     {
+        RankingList RankingList { get; set; }
         List<Ranking> Rankings { get; set; }
         public EndScreen()
         {
@@ -27,16 +28,14 @@ namespace ZTPWordsProject
         public EndScreen(int points, string language, string difficulty, string mode)
         {
             InitializeComponent();
-            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RankingDatabase.json");
-            string serializedRanking = System.IO.File.ReadAllText(fullPath);
-            Rankings = JsonConvert.DeserializeObject<List<Ranking>>(serializedRanking);
+            RankingList = RankingList.getInstance();
 
             pointsTb.Text = points.ToString() + "/20";
             languageTb.Text = language;
             difficultyTb.Text = difficulty;
             modeTb.Text = mode;
 
-            SaveToFile(fullPath, points);
+            SaveToFile(points);
         }
         //Wyjdź do Menu Głównego
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -49,16 +48,15 @@ namespace ZTPWordsProject
             }
         }
         //Zapisz nowy obiekt klasy Ranking do pliku
-        private void SaveToFile(string fullPath, int points)
+        private void SaveToFile(int points)
         {
-            Rankings.Add(new Ranking()
+            RankingList.AddToList(new Ranking()
             {
                 Language = languageTb.Text,
                 Points = points,
                 Username = "Admin"
             });
-            string serializedRanking = JsonConvert.SerializeObject(Rankings, Formatting.Indented);
-            System.IO.File.WriteAllText(fullPath, serializedRanking);
+            RankingList.SaveToFile();
         }
     }
 }

@@ -19,21 +19,19 @@ namespace ZTPWordsProject
     /// </summary>
     public partial class RankingWindow : Window
     {
-        List<Ranking> Rankings;
+        RankingList RankingList { get; set; }
         int iteration = 0;
         readonly int slotsCount = 4;
         public RankingWindow()
         {
             InitializeComponent();
-            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RankingDatabase.json");
-            string serializedRanking = System.IO.File.ReadAllText(fullPath);
-            Rankings = JsonConvert.DeserializeObject<List<Ranking>>(serializedRanking);
+            RankingList = RankingList.getInstance();
             ShowRankingRecords();
         }
         private void ShowRankingRecords()
         {
 
-            if (Rankings.Count == 0)
+            if (RankingList.GetCount() == 0)
             {
                 StackP1tb1.Text = "You haven't played any round yet";
             }
@@ -43,7 +41,7 @@ namespace ZTPWordsProject
             setRankingSlot(StackP3tb1, StackP3tb2, StackP3tb3, 2);
             setRankingSlot(StackP4tb1, StackP4tb2, StackP4tb3, 3);
 
-            if (iteration >= Rankings.Count - slotsCount)
+            if (iteration >= RankingList.GetCount() - slotsCount)
                 bRight.Visibility = Visibility.Hidden;
             else
                 bRight.Visibility = Visibility.Visible;
@@ -58,15 +56,24 @@ namespace ZTPWordsProject
         {
             try
             {
-                language.Text = "Language: " + Rankings[iteration + shift].Language;
-                points.Text = "Points: " + Rankings[iteration + shift].Points;
-                username.Text = "Username: " + Rankings[iteration + shift].Username;
+                Ranking ranking = RankingList.GetRanking(iteration + shift);
+                language.Text = "Language: " + ranking.Language;
+                points.Text = "Points: " + ranking.Points;
+                username.Text = "Username: " + ranking.Username;
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (Exception e)
             {
-                language.Text = null;
-                points.Text = null;
-                username.Text = null;
+                if(e is IndexOutOfRangeException || e is ArgumentOutOfRangeException)
+                {
+                    language.Text = null;
+                    points.Text = null;
+                    username.Text = null;
+                }
+                else
+                {
+                    throw;
+                }
+                
             }
             
         }
@@ -88,10 +95,7 @@ namespace ZTPWordsProject
         }
         private void Clear_Button_Click(object sender, RoutedEventArgs e)
         {
-            Rankings.Clear();
-            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RankingDatabase.json");
-            string serializedRanking = JsonConvert.SerializeObject(Rankings); 
-            System.IO.File.WriteAllText(fullPath, serializedRanking);           
+            RankingList.SaveToFile();   
             ShowRankingRecords();
         }
     }

@@ -22,7 +22,7 @@ namespace ZTPWordsProject.AppModels
         {
             instance = WordDatabase.GetInstance();
             answers.Clear();
-            words = instance.GetAllWordsFromLanguage(language);
+            words = instance.GetAllTranslationsFromLanguage(language);
             if (pom > words.Count())
                 return;
             word = words.ElementAt(pom);
@@ -40,7 +40,7 @@ namespace ZTPWordsProject.AppModels
                 pom2 = words.Count();
                 Random rnd = new Random();
                 pom3 = rnd.Next(pom2);
-                answers.Add(words.ElementAt(pom3).Content);
+                answers.Add(words.ElementAt(pom3).TranslationList[0]);
             }
         }
         public Answers GetResult()

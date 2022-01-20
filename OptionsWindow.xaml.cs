@@ -194,7 +194,7 @@ namespace ZTPWordsProject
                 }
             }
 
-            QuizWindow quizWindow = new QuizWindow(song, mode, difficultyLevel, answers, translationTb.Text);
+            QuizWindow quizWindow = new QuizWindow(song, mode, difficultyLevel, answers, languageTb.Text);
             quizWindow.Show();
             this.Close();
         }       
