@@ -21,13 +21,13 @@ namespace ZTPWordsProject
         {
             InitializeComponent();
         }
-        //public EndScreen()
-        //{
-        //    InitializeComponent();
-        //    pointsTb.Text = ;
-        //    languageTb.Text = ;
-        //    difficultyTb.Text = ;
-        //    modeTb.Text = ;
-        //}
+        public EndScreen(int points, string language, string difficulty, string mode)
+        {
+            InitializeComponent();
+            pointsTb.Text = points.ToString() + "/20";
+            languageTb.Text = language;
+            difficultyTb.Text = difficulty;
+            modeTb.Text = mode;
+        }
     }
 }

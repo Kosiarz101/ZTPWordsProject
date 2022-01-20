@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZTPWordsProject"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="QuizWindow" Height="720" Width="1280">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -35,18 +36,18 @@
         </Grid.RowDefinitions>
         <TextBlock Style="{StaticResource CenterTB}" Grid.Row="1" Grid.Column="2" Text="QuizWords" FontSize="35"/>
         <TextBlock x:Name="questionNumberTb" Style="{StaticResource CenterTB}" Grid.Row="3" Grid.Column="2" Text="1/20" FontSize="35"/>
-        <TextBlock Style="{StaticResource CenterTB}" Grid.Row="5" Grid.Column="2" Text="Car" FontSize="35"/>
+        <TextBlock x:Name="questionContentTb" Style="{StaticResource CenterTB}" Grid.Row="5" Grid.Column="2" FontSize="35" Text="{Binding Path=question}"/>
 
-        <Button x:Name="FirstAnswer" Grid.Column="2" Grid.Row="7" >
+        <Button x:Name="FirstAnswer" Grid.Column="2" Grid.Row="7" Click="Answer_Click">
+            <TextBlock Text="{Binding Path=QuestionAnswers[0]}" FontSize="25"></TextBlock>
+        </Button>
+        <Button x:Name="SecondAnswer" Grid.Column="2" Grid.Row="9" Click="Answer_Click">
             <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
         </Button>
-        <Button x:Name="SecondAnswer" Grid.Column="2" Grid.Row="9" >
+        <Button x:Name="ThirdAnswer" Grid.Column="2" Grid.Row="11"  Click="Answer_Click">
             <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
         </Button>
-        <Button x:Name="ThirdAnswer" Grid.Column="2" Grid.Row="11" >
-            <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
-        </Button>
-        <Button x:Name="FourthAnswer" Grid.Column="2" Grid.Row="13" >
+        <Button x:Name="FourthAnswer" Grid.Column="2" Grid.Row="13"  Click="Answer_Click">
             <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
         </Button>
         <Grid Grid.Row="15" Grid.Column="1" Grid.ColumnSpan="3">

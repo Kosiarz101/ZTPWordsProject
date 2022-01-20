@@ -26,8 +26,7 @@ namespace ZTPWordsProject
         public IMode Mode { get; set; }
         private IDifficultyLevel DifficultyLevel { get; set; }
 
-        public string Question;
-        private List<Answers> ListofQuestions = new List<Answers>();
+        private List<Answers> ListofQuestions { get; set; } = new List<Answers>();
 
         private List<string> QuestionAnswers { get; set; }
 
@@ -39,6 +38,7 @@ namespace ZTPWordsProject
 
         public string question { get; set; }
         private string UserAnswer { get; set; }
+        //Zarządca we wzorcu Memento
         private List<IMemento> mementoList = new List<IMemento>();
 
         public QuizWindow()
@@ -71,31 +71,33 @@ namespace ZTPWordsProject
                 ListofQuestions.Add(answers[i]);
             }
             number = SetDifficultyLevel();
-            ShowAnswers();
-            //this.DataContext = this;
+            DataContext = this;
+            ShowAnswers();         
         }
 
         private void NextQuestion_Click(object sender, RoutedEventArgs e)
         {
             if(Index==19)
             {
-                EndScreen endScreen = new EndScreen();
+                EndScreen endScreen = new EndScreen(points, "Angielski", modeTb.Text, difficultyTb.Text);
                 endScreen.Show();
                 this.Close();
-            }
-            if(Mode.CheckAnswer(ref points, "kurwa", "kurwa"))
+            }           
+            if(Mode.CheckAnswer(ref points, UserAnswer, ListofQuestions[Index].GetAnswers()[0]))
             {
                 //Jeżeli została już ustawiona pamiątka, wczytaj ją
                 if (mementoListCount() > Index + 1)
                 {
                     SetState((Memento)GetState(Index + 1));
+                    ShowAnswers();
                 }
                 //Jeśli nie, utwórz nową pamiątkę
                 else
-                {
+                {                   
                     if (mementoListCount() == Index)
                         AddState(SaveState());
                     Index++;
+                    UserAnswer = null;
                     ShowAnswers();
                     //tbQuestion.Text = words[Index];
                     //tbAnswer.Text = "";
@@ -106,13 +108,14 @@ namespace ZTPWordsProject
         private void PreviousQuestion_Click(object sender, RoutedEventArgs e)
         {
             if(Index != 0)
-                SetState((Memento)GetState(Index - 1));
-            questionNumberTb.Text = (Index + 1).ToString() + "/20";
+                SetState((Memento)GetState(Index - 1));           
+            ShowAnswers();
         }
         //Wczytaj stan z pamiątki
         private void SetState(Memento memento)
         {
             Index = memento.Index;
+            UserAnswer = memento.UserAnswer;
             ShowAnswers();
             //tbAnswer.Text = memento.Answer;
             //tbQuestion.Text = words[Index];
@@ -120,24 +123,25 @@ namespace ZTPWordsProject
         //Zapisz stan w pamiątce
         public IMemento SaveState()
         {
-            return new Memento("answer", Index);
+            return new Memento(UserAnswer, Index);
         }
         //Wewnętrzna klasa pamiątki
         private class Memento : IMemento
         {
-            public string Answer { get; set; }
+            public string UserAnswer { get; set; }
             public int Index { get; set; }
             public Memento(string answer, int index)
             {
-                Answer = answer;
+                UserAnswer = answer;
                 Index = index;
             }
             public void SetState(string answer, int index)
             {
-                Answer = answer;
+                UserAnswer = answer;
                 Index = index;
             }
         }
+
         //Dodaje nową pamiątkę do zarządcy
         public void AddState(IMemento memento)
         {
@@ -155,9 +159,10 @@ namespace ZTPWordsProject
         }
 
         public void ShowAnswers()
-        {
+        {           
+            questionNumberTb.Text = (Index + 1).ToString() + "/20";
             Answers DaQuestion = ListofQuestions.ElementAt(Index);
-            question = DaQuestion.GetQuestion();
+            questionContentTb.Text = DaQuestion.GetQuestion();
             QuestionAnswers = DaQuestion.GetAnswers();
             if (number == 2)
             {
@@ -172,13 +177,51 @@ namespace ZTPWordsProject
                 QuestionAnswers.RemoveAt(3);
                 QuestionAnswers.Add("x");
             }
-
+            setTextBlockAnswers();
         }
 
         public int SetDifficultyLevel()
         {
             number = DifficultyLevel.Answers();
             return number;
+        }
+
+        private void Answer_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            TextBlock textBlock = (TextBlock)button.Content;
+            UserAnswer = textBlock.Text;
+            buttonColor(FirstAnswer);
+            buttonColor(SecondAnswer);
+            buttonColor(ThirdAnswer);
+            buttonColor(FourthAnswer);
+            button.Background = Brushes.Blue;
+        }
+        private void buttonColor(Button button)
+        {
+            TextBlock tb = (TextBlock)button.Content;
+            if (UserAnswer != null && tb.Text == UserAnswer)
+                button.Background = Brushes.Blue;
+            else
+                button.Background = Brushes.Gray;
+        }
+        private void setTextBlockAnswers()
+        {
+            buttonColor(FirstAnswer);
+            buttonColor(SecondAnswer);
+            buttonColor(ThirdAnswer);
+            buttonColor(FourthAnswer);
+
+            Random rnd = new Random();
+
+            TextBlock tb = (TextBlock)FirstAnswer.Content;
+            tb.Text = QuestionAnswers[0];
+            tb = (TextBlock)SecondAnswer.Content;
+            tb.Text = QuestionAnswers[1];
+            tb = (TextBlock)ThirdAnswer.Content;
+            tb.Text = QuestionAnswers[2];
+            tb = (TextBlock)FourthAnswer.Content;
+            tb.Text = QuestionAnswers[3];
         }
     }
 }

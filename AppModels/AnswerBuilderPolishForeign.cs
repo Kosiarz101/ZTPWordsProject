@@ -10,7 +10,7 @@ namespace ZTPWordsProject.AppModels
         private string language;
         private WordDatabase instance;
         private List<WordWithTranslations> words;
-        private int pom = 0;
+        private static int pom = 0;
         private int pom2;
         private int pom3;
         private string question;
@@ -20,8 +20,8 @@ namespace ZTPWordsProject.AppModels
 
         public void BuildAnswer(string language)
         {
-
             instance = WordDatabase.GetInstance();
+            answers.Clear();
             words = instance.GetAllWordsFromLanguage(language);
             if (pom > words.Count())
                 return;
@@ -29,7 +29,7 @@ namespace ZTPWordsProject.AppModels
             question = word.Content;
             Answer = word.TranslationList.ElementAt(0);
             answers.Add(Answer);
-
+            pom = (pom + 1) % words.Count;
         }
         public void BuildRandomAnswers()
         {

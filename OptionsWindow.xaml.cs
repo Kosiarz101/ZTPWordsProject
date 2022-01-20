@@ -51,7 +51,7 @@ namespace ZTPWordsProject
             };
             translationSites = new List<string>()
             {
-                "Polsk-Obcy", "Obcy-Polski"
+                "Polski-Obcy", "Obcy-Polski"
             };
             songs = new List<string>()
             {
@@ -158,25 +158,45 @@ namespace ZTPWordsProject
             else
                 song = null;
 
-            if (translationSites[translationSiteCounter] == "Polsk-Obcy")
+            if (difficulties[difficultyCounter] == "Łatwy")
             {
-                builder = new AnswerBuilderPolishForeign();
-                answerDirector.ConstructAnswer(builder, languageTb.Text);
-                answers.Add(builder.GetResult());
+                difficultyLevel = new EasyLevel();
             }
-                
+            else if (difficulties[difficultyCounter] == "Średni")
+            {
+                difficultyLevel = new MediumLevel();
+            }
+            else if (difficulties[difficultyCounter] == "Trudny")
+            {
+                difficultyLevel = new HardLevel();
+            }
             else
             {
-                builder = new AnswerBuilderForeignPolish();
-                answerDirector.ConstructAnswer(builder, languageTb.Text);
-                answers.Add(builder.GetResult());
+                difficultyLevel = new HardestLevel();
+            }
+
+            if (translationSites[translationSiteCounter] == "Polski-Obcy")
+            {                             
+                for(int i=0; i<20; i++)
+                {
+                    builder = new AnswerBuilderPolishForeign();
+                    answerDirector.ConstructAnswer(builder, languageTb.Text);
+                    answers.Add(builder.GetResult());
+                }               
+            }                
+            else
+            {                
+                for (int i = 0; i < 20; i++)
+                {
+                    builder = new AnswerBuilderForeignPolish();
+                    answerDirector.ConstructAnswer(builder, languageTb.Text);
+                    answers.Add(builder.GetResult());
+                }
             }
 
             QuizWindow quizWindow = new QuizWindow(song, mode, difficultyLevel, answers);
             quizWindow.Show();
             this.Close();
-        }
-
-        
+        }       
     }
 }
