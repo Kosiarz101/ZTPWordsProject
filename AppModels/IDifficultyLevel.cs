@@ -7,5 +7,7 @@ namespace ZTPWordsProject.AppModels
     public interface IDifficultyLevel
     {
         public int Answers();
+
+        public string getPoziomTrudności();
     }
 }

@@ -72,11 +72,11 @@
                 <TextBlock Text="&lt;&lt;" FontSize="25"></TextBlock>
             </Button>
             <TextBlock Style="{StaticResource CenterTB}" Grid.Row="1" Grid.Column="2" Text="Poziom Trudności:" FontSize="16" />
-            <TextBlock x:Name="difficultyTb" Style="{StaticResource CenterTB}" Grid.Row="2" Grid.Column="2" Text="Łatwy" FontSize="16" />
+            <TextBlock x:Name="difficultyTb" Style="{StaticResource CenterTB}" Grid.Row="2" Grid.Column="2" FontSize="16" />
             <TextBlock Style="{StaticResource CenterTB}" Grid.Row="1" Grid.Column="4" Text="Tryb:" FontSize="16" />
-            <TextBlock x:Name="modeTb" Style="{StaticResource CenterTB}" Grid.Row="2" Grid.Column="4" Text="Nauki" FontSize="16" />
+            <TextBlock x:Name="modeTb" Style="{StaticResource CenterTB}" Grid.Row="2" Grid.Column="4"  FontSize="16" />
             <TextBlock Style="{StaticResource CenterTB}" Grid.Row="1" Grid.Column="6" Text="Tłumaczenie:" FontSize="16" />
-            <TextBlock x:Name="translationSiteTb" Style="{StaticResource CenterTB}" Grid.Row="2" Grid.Column="6" Text="Obcy-Polski" FontSize="16" />
+            <TextBlock x:Name="translationSiteTb" Style="{StaticResource CenterTB}" Grid.Row="2" Grid.Column="6" FontSize="16" />
             <Button x:Name="NextQuestion" Grid.Column="8" Grid.Row="1" Grid.RowSpan="2" Click="NextQuestion_Click" >
                 <TextBlock Text="&gt;&gt;" FontSize="25"></TextBlock>
             </Button>

@@ -38,6 +38,8 @@ namespace ZTPWordsProject
 
         public string question { get; set; }
         private string UserAnswer { get; set; }
+
+        public string language { get; set; }
         //Zarządca we wzorcu Memento
         private List<IMemento> mementoList = new List<IMemento>();
 
@@ -56,7 +58,7 @@ namespace ZTPWordsProject
             Mode = mode;
             Mode.SetTextBlock(modeTb);
         }
-        public QuizWindow(ISong song, IMode mode, IDifficultyLevel difficultyLevel, List<Answers> answers)
+        public QuizWindow(ISong song, IMode mode, IDifficultyLevel difficultyLevel, List<Answers> answers, string llanguage)
         {
             InitializeComponent();
             wordDatabase = WordDatabase.GetInstance();
@@ -72,7 +74,9 @@ namespace ZTPWordsProject
             }
             number = SetDifficultyLevel();
             DataContext = this;
-            ShowAnswers();         
+            ShowAnswers();
+            language = llanguage;
+            setInformationAboutGame();
         }
 
         private void NextQuestion_Click(object sender, RoutedEventArgs e)
@@ -159,7 +163,11 @@ namespace ZTPWordsProject
         }
 
         public void ShowAnswers()
-        {           
+        {
+            if (Index > 19)
+            {
+                return;
+            }        
             questionNumberTb.Text = (Index + 1).ToString() + "/20";
             Answers DaQuestion = ListofQuestions.ElementAt(Index);
             questionContentTb.Text = DaQuestion.GetQuestion();
@@ -222,6 +230,21 @@ namespace ZTPWordsProject
             tb.Text = QuestionAnswers[2];
             tb = (TextBlock)FourthAnswer.Content;
             tb.Text = QuestionAnswers[3];
+        }
+
+        public string setDifficultyLevel()
+        {
+            return DifficultyLevel.getPoziomTrudności();
+        }
+
+
+        private void setInformationAboutGame()
+        {
+
+            TextBlock tb = difficultyTb;
+            tb.Text = setDifficultyLevel();
+            TextBlock tr = translationSiteTb;
+            tr.Text = language;
         }
     }
 }

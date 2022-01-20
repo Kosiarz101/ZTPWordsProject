@@ -6,9 +6,15 @@ namespace ZTPWordsProject.AppModels
 {
     public class HardLevel : IDifficultyLevel
     {
+        private string poziomTrudności = "Trudny";
         public int Answers()
         {
             return 4;
+        }
+
+        public string getPoziomTrudności()
+        {
+            return poziomTrudności;
         }
     }
 }
