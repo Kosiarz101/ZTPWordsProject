@@ -36,6 +36,7 @@ namespace ZTPWordsProject
             SetButtonsLanguage();
             languageName.Text = "Wszystkie";
         }
+        //Wczytaj wszystkie tryby operacji wykonaj
         private void SetParameters()
         {
             foreach(string mode in modes)
@@ -115,7 +116,7 @@ namespace ZTPWordsProject
             wordDatabase.RemoveWordByContent(word.Content, word.Language);
             Search();
         }
-
+        //Dodaj Słowo do bazy danych
         private void AddWord()
         {
             if(languageName.Text == "Wszystkie")
@@ -202,6 +203,7 @@ namespace ZTPWordsProject
             //wordWithTranslationsList = wordDatabase.GetWordWithTranslationsBySearch(word.Content, word.Language);
 
             word = wordDatabase.GetWordWithTranslationsBySearch(word.Content, word.Language).Where(x => x.Content == chosenContent).FirstOrDefault();
+            //Jeżeli nie ma tłumczeń
             if (word.TranslationList.Count == 0)
             {
                 textBlock = new TextBlock();
@@ -210,6 +212,7 @@ namespace ZTPWordsProject
                 textBlock.MinHeight = 60;
                 TranslationSP.Children.Add(textBlock);
             }
+            //Jeżeli tłumaczenia są, wyświetl je wszystkie w postaci przycisków na ekranie
             foreach (string translation in word.TranslationList)
             {
                 textBlock = new TextBlock();
@@ -223,7 +226,7 @@ namespace ZTPWordsProject
                 TranslationSP.Children.Add(button);
             }
         }
-
+        //Dodaj język do bazy danych wraz z nowym słowem
         private void AddLanguageButton_Click(object sender, RoutedEventArgs e)
         {
             AddLanguageWindow addLanguageWindow = new AddLanguageWindow();
@@ -232,7 +235,7 @@ namespace ZTPWordsProject
                 SetButtonsLanguage();
             }
         }
-
+        //Wyjdź do menu głównego jeżeli klawisz esc został naciśnięty
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Escape)
