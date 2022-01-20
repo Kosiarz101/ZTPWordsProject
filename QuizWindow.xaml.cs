@@ -79,9 +79,11 @@ namespace ZTPWordsProject
         {
             if(Index==19)
             {
+                Song.StopPlaying();
                 EndScreen endScreen = new EndScreen(points, "Angielski", modeTb.Text, difficultyTb.Text);
                 endScreen.Show();
                 this.Close();
+                return;
             }           
             if(Mode.CheckAnswer(ref points, UserAnswer, ListofQuestions[Index].GetAnswers()[0]))
             {

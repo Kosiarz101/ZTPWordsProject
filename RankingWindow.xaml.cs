@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -24,39 +25,9 @@ namespace ZTPWordsProject
         public RankingWindow()
         {
             InitializeComponent();
-            Rankings = new List<Ranking>()
-            {
-                new Ranking()
-                {
-                    Language = "Angielski",
-                    Points = 15,
-                    Username = "Admin"
-                },
-                new Ranking()
-                {
-                    Language = "Niemiecki",
-                    Points = 12,
-                    Username = "Admin"
-                },
-                new Ranking()
-                {
-                    Language = "Angielski",
-                    Points = 16,
-                    Username = "Admin"
-                },
-                new Ranking()
-                {
-                    Language = "Niemiecki",
-                    Points = 12,
-                    Username = "Admin"
-                },
-                new Ranking()
-                {
-                    Language = "Niemiecki",
-                    Points = 12,
-                    Username = "Admin"
-                }
-            };
+            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RankingDatabase.json");
+            string serializedRanking = System.IO.File.ReadAllText(fullPath);
+            Rankings = JsonConvert.DeserializeObject<List<Ranking>>(serializedRanking);
             ShowRankingRecords();
         }
         private void ShowRankingRecords()
@@ -118,6 +89,9 @@ namespace ZTPWordsProject
         private void Clear_Button_Click(object sender, RoutedEventArgs e)
         {
             Rankings.Clear();
+            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RankingDatabase.json");
+            string serializedRanking = JsonConvert.SerializeObject(Rankings); 
+            System.IO.File.WriteAllText(fullPath, serializedRanking);           
             ShowRankingRecords();
         }
     }
